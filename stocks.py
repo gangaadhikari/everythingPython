@@ -5,7 +5,7 @@ from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
 
 #Get the data
-df = quandl.get("WIKI/TSLA")
+df = quandl.get("WIKI/AMZN")
 #Look at the data
 print(df.head())
 
@@ -15,7 +15,7 @@ df = df[['Adj. Close']]
 print(df.head())
 
 #Number of days to forecast
-forecastDays = 1
+forecastDays = 30
 
 #Create another column (the target) shifter 'forecastDays' units up
 df['Prediction'] = df[['Adj. Close']].shift(-forecastDays)
@@ -57,3 +57,15 @@ lr.fit(x_train, y_train)
 #The best posssible score = 1
 lr_confidence = lr.score(x_test, y_test)
 print("lr confidence: ", lr_confidence)
+
+# Set x_forecast equal to the last 30 rows of the orginal data set from Adj. Close
+x_forecast = np.array(df.drop(['Prediction'],1))[-forecastDays:]
+print(x_forecast)
+
+#Print the linear regression predictions for the 'n' days 
+lr_prediction = lr.predict(x_forecast)
+print(lr_prediction)
+
+#Print the svm predictions for the 'n' days 
+svr_prediction = svr_rbf.predict(x_forecast)
+print(svr_prediction)
