@@ -5,7 +5,7 @@ from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
 
 #Get the data
-df = quandl.get("WIKI/AMZN")
+df = quandl.get("WIKI/TSLA")
 #Look at the data
 print(df.head())
 
